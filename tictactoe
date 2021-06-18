@@ -1,0 +1,124 @@
+from IPython.display import clear_output
+import random
+def display_board(board):
+    clear_output()
+    print(board[1]+' | '+board[2]+' | '+board[3])
+    print("__|___|__")
+    print(board[4]+' | '+board[5]+' | '+board[6])
+    print("__|___|__")
+    print(board[7]+' | '+board[8]+' | '+board[9])
+    print("  |   |  ")
+def marker_input():
+    marker = ''
+    while marker != 'X' and marker != 'O':
+        marker = input("Player 1, please pick marker 'X' or 'O' :  ")
+    player1 = marker
+
+    if player1 == 'X':
+        player2 = 'O'
+        print("Player 1 chose X, Player 2 will be O")
+    else:
+        player2 = 'X'
+        print("Player 1 chose O, Player 2 will be X")
+    return(player1, player2)
+def place_marker(board, marker, postition):
+    board[position] = marker
+def win_check(board, marker):
+    return((board[1] == board[2] == board[3] == marker) or
+    (board[4] == board[5] == board[6] == marker) or
+    (board[7] == board[8] == board[9] == marker) or
+    (board[1] == board[4] == board[7] == marker) or
+    (board[2] == board[5] == board[8] == marker) or
+    (board[3] == board[6] == board[9] == marker) or
+    (board[1] == board[5] == board[9] == marker) or
+    (board[3] == board[5] == board[7] == marker))
+def first():
+    flip = random.randint(0,1)
+
+    if flip == 0:
+        return 'Player 1'
+    else:
+        return 'Player 2'
+def space_check(board, position):
+    return board[position] == ' '
+def full_board_check(board):
+    for i in range(1,10):
+        if space_check(board, i):
+            return False #Check if board is full, if space check return true, space is empty.
+
+    return True
+def player_position(board):
+    position = 0
+    while position not in [1,2,3,4,5,6,7,8,9] or not space_check(board,position):
+        position = int(input('Choose Position :  (1-9)   '))
+    return position
+def replay():
+    choice = ''
+    while choice != 'Y' and choice != 'N':
+        choice = input("Again?(Y/N):   ")
+
+    return choice == 'Y'
+
+
+#KEEP GAME RUNNING while loop
+print('Welcome')
+
+while True:
+
+    #Play GAME
+
+    #Setup board
+    game_board = [' ']*10
+    #Choose Markers
+    player1_marker, player2_marker = marker_input()
+    #Randomize player1
+    turn = first()
+    print(turn + ' will go first')
+    playgame = input('Ready? (Y/N)  ')
+    if playgame == 'Y':
+        game_on = True
+    else:
+        game_on = False
+    ##GAMEPLAY
+    while game_on:
+
+        if turn == 'Player 1':
+            display_board(game_board)
+            position = player_position(game_board)
+            place_marker(game_board, player1_marker, position)
+
+            if win_check(game_board, player1_marker):
+                display_board(game_board)
+                print('Player 1 Wins')
+                game_on = False
+            else:
+                if full_board_check(game_board):
+                    display_board(game_board)
+                    print('Its a Draw')
+                    game_on = False
+                else:
+                    turn = 'Player 2'
+
+    ###P1 TURN
+        else:
+            display_board(game_board)
+            position = player_position(game_board)
+            place_marker(game_board, player2_marker, position)
+
+            if win_check(game_board, player2_marker):
+                display_board(game_board)
+                print('Player 2 Wins')
+                game_on = False
+            else:
+                if full_board_check(game_board):
+                    display_board(game_board)
+                    print('Its a Draw')
+                    game_on = False
+                else:
+                    turn = 'Player 1'
+    ###P2 TURN
+
+
+    if not replay():
+        break
+#BREAK on no replay
