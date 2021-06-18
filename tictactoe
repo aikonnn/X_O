@@ -94,7 +94,7 @@ while True:
             else:
                 if full_board_check(game_board):
                     display_board(game_board)
-                    print('Its a Draw')
+                    print("It's a DRAW!!")
                     game_on = False
                 else:
                     turn = 'Player 2'
@@ -112,7 +112,7 @@ while True:
             else:
                 if full_board_check(game_board):
                     display_board(game_board)
-                    print('Its a Draw')
+                    print("It's a DRAW!!")
                     game_on = False
                 else:
                     turn = 'Player 1'
