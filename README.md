@@ -1,2 +1,2 @@
-# X_O
-basic xo game using python
+# TICTACTOE
+basic tic tac toe game with text ui using Python
